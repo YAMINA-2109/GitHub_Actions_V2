@@ -1,9 +1,11 @@
 name: 04 - Using Actions
-on: push
-# workflow_dispatch
+on: workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./04-using-actions # Set default working directory for all run steps
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -12,15 +14,23 @@ jobs:
       #   run: |
       #     echo "Displaying the project folder structure:"
       #     ls -R
+      # or just :
+      #   run: ls
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: "20.x"
       - name: Install Dependencies
-        run: |
-          cd ./04-using-actions
-          npm ci
+        run: npm ci
+        # working-directory: ./04-using-actions
+      # or :
+      # run: |
+      #   cd ./04-using-actions
+      #   npm ci
       - name: Run Unit Tests
-        run: |
-          cd ./04-using-actions
-          npm run test
+        run: npm test
+        # working-directory: ./04-using-actions
+      # or :
+      # run: |
+      #   cd ./04-using-actions
+      #   npm run test
